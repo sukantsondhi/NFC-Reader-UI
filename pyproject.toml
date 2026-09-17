@@ -1,0 +1,8 @@
+[tool.pylint.main]
+extension-pkg-allow-list = ["PySide6"]
+
+[tool.pylint.typecheck]
+generated-members = ["connect", "disconnect", "emit"]
+
+[tool.pylint.messages_control]
+disable = ["attribute-defined-outside-init", "broad-exception-caught"]

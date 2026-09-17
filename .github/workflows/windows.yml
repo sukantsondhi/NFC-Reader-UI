@@ -1,0 +1,46 @@
+name: Windows checks and executable
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: x64
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-build.txt
+            constraints-windows.txt
+      - name: Install build dependencies
+        run: python -m pip install -r requirements-build.txt -c constraints-windows.txt
+      - name: Test, build and smoke-test executable
+        run: python tools/build_windows.py
+      - name: Upload verified executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: NFCWorkbench-windows-x64
+          path: release/*
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload smoke diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-smoke-diagnostics
+          path: |
+            build/packaged-smoke.json
+            build/packaged-smoke.png
+          if-no-files-found: ignore

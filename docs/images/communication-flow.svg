@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="210" viewBox="0 0 1060 210" role="img" aria-labelledby="title description">
+  <title id="title">From the desktop application to the contactless tag</title>
+  <desc id="description">NFC Workbench communicates through pyscard and Windows PC/SC, the USB CCID driver, and the ACR122U reader. The reader exchanges data with one active tag over a 13.56 MHz contactless link.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto-start-reverse">
+      <path d="M0 0 L7 3.5 L0 7 Z" fill="#46688f"/>
+    </marker>
+  </defs>
+  <rect width="1060" height="210" fill="#f5f8fe"/>
+  <g fill="#ffffff" stroke="#c9d4e5" stroke-width="2">
+    <rect x="20" y="65" width="180" height="80" rx="5"/>
+    <rect x="230" y="65" width="180" height="80" rx="5"/>
+    <rect x="440" y="65" width="180" height="80" rx="5"/>
+    <rect x="650" y="65" width="180" height="80" rx="5"/>
+    <rect x="860" y="65" width="180" height="80" rx="5"/>
+  </g>
+  <g stroke="#46688f" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M202 105 H225"/>
+    <path d="M412 105 H435"/>
+    <path d="M622 105 H645"/>
+    <path d="M835 105 H855" marker-start="url(#arrow)"/>
+  </g>
+  <g font-family="Segoe UI, sans-serif" font-size="16" text-anchor="middle" fill="#194aa8">
+    <text x="110" y="111">NFC Workbench</text>
+    <text x="320" y="99">pyscard / Windows</text>
+    <text x="320" y="123">PC/SC</text>
+    <text x="530" y="111">USB CCID driver</text>
+    <text x="740" y="111">ACR122U reader</text>
+    <text x="950" y="111">One active tag</text>
+  </g>
+  <g font-family="Segoe UI, sans-serif" font-size="14" text-anchor="middle" fill="#61728a">
+    <text x="530" y="35">Application and driver layers</text>
+    <text x="845" y="179">13.56 MHz contactless exchange</text>
+  </g>
+</svg>
