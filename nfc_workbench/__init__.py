@@ -1,0 +1,1 @@
+"""NFC Workbench desktop application."""

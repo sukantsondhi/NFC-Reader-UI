@@ -9,11 +9,15 @@ logs before sharing diagnostics. Do not attach production card dumps.
 
 ```powershell
 py -3.11 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-build.txt -c constraints-windows.txt
+.\.venv\Scripts\python.exe -m pip install -r packaging/windows/requirements-build.txt -c packaging/windows/constraints.txt
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 .\.venv\Scripts\python.exe tools/check_repository.py
 .\.venv\Scripts\python.exe app.py --demo
 ```
+
+Keep application code under `nfc_workbench/`, Windows packaging inputs under
+`packaging/windows/`, and illustrated documentation under `docs/`. Root launchers
+are retained for compatibility; do not add implementation modules there.
 
 Keep command encoding/decoding in the protocol module, device operations in the
 single-thread-owned session, and UI callbacks on the Qt thread. Do not add

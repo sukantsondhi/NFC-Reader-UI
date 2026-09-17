@@ -21,7 +21,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from app import VERSION
+from nfc_workbench.__main__ import VERSION
 
 
 def run(*arguments, **options):
@@ -55,7 +55,7 @@ def collect_licenses(destination):
         (destination / f"{identifier}.txt").write_bytes(text)
     (destination / "components.json").write_text(json.dumps({"python": platform.python_version(),
         "components": components, "spdx_text_source": "https://github.com/spdx/license-list-data"}, indent=2), encoding="utf-8")
-    shutil.copy2(ROOT / "THIRD_PARTY_NOTICES.md", destination / "THIRD_PARTY_NOTICES.md")
+    shutil.copy2(ROOT / "docs" / "THIRD_PARTY_NOTICES.md", destination / "THIRD_PARTY_NOTICES.md")
 
 
 def prepare_assets():
@@ -134,7 +134,7 @@ def main():
     build.mkdir(exist_ok=True)
     collect_licenses(build / "licenses")
     prepare_assets()
-    run(sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean", "NFCWorkbench.spec")
+    run(sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean", "packaging/windows/NFCWorkbench.spec")
     executable = ROOT / "dist" / "NFCWorkbench.exe"
     report = build / "packaged-smoke.json"
     with TemporaryDirectory(prefix="NFC Workbench smoke ") as working:

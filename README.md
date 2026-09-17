@@ -127,7 +127,7 @@ an integer.
 | User Manual | Complete offline illustrated guide, section links, text search, image viewing and zoom |
 
 The command-by-command implementation checklist and manual corrections are in
-**[FEATURES.md](FEATURES.md)**.
+**[docs/FEATURES.md](docs/FEATURES.md)**.
 
 ## No-Card Reader Control
 
@@ -210,7 +210,7 @@ dependency licenses, creates a single `.exe`, and smoke-tests that executable
 from a separate working directory in Demo mode.
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-build.txt -c constraints-windows.txt
+.\.venv\Scripts\python.exe -m pip install -r packaging/windows/requirements-build.txt -c packaging/windows/constraints.txt
 .\.venv\Scripts\python.exe tools/build_windows.py
 ```
 
@@ -220,7 +220,7 @@ See [docs/RELEASING.md](docs/RELEASING.md) for the full build/release procedure,
 [CHANGELOG.md](CHANGELOG.md) for version history.
 
 Original project code and documentation are [MIT licensed](LICENSE). Bundled
-libraries retain their own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+libraries retain their own licenses; see [docs/THIRD_PARTY_NOTICES.md](docs/THIRD_PARTY_NOTICES.md).
 The ACS vendor PDF is deliberately not redistributed. **API manual** opens an
 optional local copy, or ACS's official download.
 
@@ -235,14 +235,45 @@ returned **ACR122U216** from a direct escape firmware query. No tag was present.
 Physical card reads/writes and peripheral changes therefore remain unverified;
 no real card data or reader settings were modified during development.
 
-## Code Layout
+## Repository Layout
 
-- [acr122.py](acr122.py): command encoders, status decoders and memory maps.
-- [device.py](device.py): native PC/SC transport, guarded workflows and dump/NDEF utilities.
-- [simulator.py](simulator.py): isolated demo transport.
-- [worker.py](worker.py): serialized Qt worker and reader/card monitoring.
-- [ui.py](ui.py), [theme.qss](theme.qss): desktop panels and visual styling.
-- [app.py](app.py): application entry point.
+```text
+NFC-Reader-UI/
+	nfc_workbench/        Application package: protocol, device, UI and demo
+		assets/            Stylesheet, runtime icons and their attribution
+		__main__.py        Application CLI and startup
+	docs/                User manual, feature checklist and release/license guides
+		images/            Screenshots and diagram referenced by the documentation
+	packaging/windows/   PyInstaller specification, build dependencies and hooks
+	tests/               Protocol, device, UI and repository regression checks
+	tools/               Build, screenshot capture and publication-check commands
+	.github/workflows/   Windows CI
+	.vscode/             Shared interpreter and test-discovery settings
+	app.py               Compatibility entry point for existing launch commands
+	launch.cmd           Double-click Windows source launcher
+	requirements.txt     Runtime dependencies
+	pyproject.toml       Lint configuration
+```
 
-Icons are provided by QtAwesome / Font Awesome Free. The two arrow PNGs in
-`assets` are rendered from those icons; attribution is in [assets/README.md](assets/README.md).
+The root also keeps the standard README, license, changelog, contribution and
+security files so GitHub and contributors can find them. Core modules live in
+[nfc_workbench/acr122.py](nfc_workbench/acr122.py),
+[nfc_workbench/device.py](nfc_workbench/device.py),
+[nfc_workbench/ui.py](nfc_workbench/ui.py), and neighboring package files.
+
+Both `python app.py` and `python -m nfc_workbench` launch the app from a checkout.
+Windows packaging inputs are grouped in
+[packaging/windows/NFCWorkbench.spec](packaging/windows/NFCWorkbench.spec).
+
+Local `.venv`, caches, `build`, `dist`, `release`, and `artifacts` directories are
+ignored and are not part of the published repository. The local ACS PDF and
+private key/card-export patterns are ignored as well. Binaries belong in GitHub
+Release assets, not Git history. The publication checker verifies local links,
+referenced documentation/runtime images, and accidental generated/sensitive files:
+
+```powershell
+.\.venv\Scripts\python.exe tools/check_repository.py
+```
+
+Icons are provided by QtAwesome / Font Awesome Free. Attribution is in
+[nfc_workbench/assets/README.md](nfc_workbench/assets/README.md).

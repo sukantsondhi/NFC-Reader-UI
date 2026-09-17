@@ -1,9 +1,9 @@
 import unittest
 from unittest.mock import patch
 
-import acr122 as api
-from device import Session, decode_ndef, parse_dump
-from simulator import DemoTransport
+from nfc_workbench import acr122 as api
+from nfc_workbench.device import Session, decode_ndef, parse_dump
+from nfc_workbench.simulator import DemoTransport
 
 
 class DeviceTests(unittest.TestCase):

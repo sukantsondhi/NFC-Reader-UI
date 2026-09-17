@@ -22,10 +22,10 @@ jobs:
           cache: pip
           cache-dependency-path: |
             requirements.txt
-            requirements-build.txt
-            constraints-windows.txt
+            packaging/windows/requirements-build.txt
+            packaging/windows/constraints.txt
       - name: Install build dependencies
-        run: python -m pip install -r requirements-build.txt -c constraints-windows.txt
+        run: python -m pip install -r packaging/windows/requirements-build.txt -c packaging/windows/constraints.txt
       - name: Test, build and smoke-test executable
         run: python tools/build_windows.py
       - name: Upload verified executable

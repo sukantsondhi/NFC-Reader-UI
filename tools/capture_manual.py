@@ -11,10 +11,10 @@ import ndef
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-import acr122 as api
-from device import Session
-from simulator import DemoTransport
-from ui import Workbench, pretty
+from nfc_workbench import acr122 as api
+from nfc_workbench.device import Session
+from nfc_workbench.simulator import DemoTransport
+from nfc_workbench.ui import Workbench, pretty
 
 
 class ManualCapture:

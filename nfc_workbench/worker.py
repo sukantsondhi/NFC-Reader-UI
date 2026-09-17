@@ -4,8 +4,8 @@ import threading
 
 from PySide6.QtCore import QObject, QTimer, Signal, Slot
 
-from device import Session
-from simulator import DemoTransport
+from .device import Session
+from .simulator import DemoTransport
 
 
 class ReaderWorker(QObject):

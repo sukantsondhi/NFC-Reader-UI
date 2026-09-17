@@ -19,13 +19,16 @@ def main():
     files = subprocess.check_output(
         ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"], cwd=ROOT
     ).decode("utf-8").split("\0")
-    paths = sorted({ROOT / name for name in files if name})
+    paths = sorted({ROOT / name for name in files if name and (ROOT / name).is_file()})
     failures = []
     images = set()
     links = 0
     for path in paths:
         relative = path.relative_to(ROOT).as_posix()
-        if path.suffix.lower() in (".exe", ".pfx", ".pem", ".key") or path.name.startswith(".env"):
+        generated_directories = {".venv", "__pycache__", ".pytest_cache", "artifacts", "build", "dist", "release"}
+        if generated_directories.intersection(path.relative_to(ROOT).parts[:-1]):
+            failures.append(f"Generated/environment file in publishable tree: {relative}")
+        if path.suffix.lower() in (".exe", ".pfx", ".pem", ".key", ".pyc", ".pyo", ".log") or path.name.startswith(".env"):
             failures.append(f"Sensitive/build file in publishable tree: {relative}")
         if path.stat().st_size > 25 * 1024 * 1024:
             failures.append(f"Oversized Git file: {relative}")
@@ -60,6 +63,17 @@ def main():
                     failures.append(f"Missing/unpublished local link: {relative}: {target}")
                 elif child.type == "image":
                     images.add(linked)
+    stylesheet = ROOT / "nfc_workbench" / "assets" / "theme.qss"
+    if stylesheet.is_file():
+        for filename in re.findall(r'url\("@ASSETS@/([^"\n]+)"\)', stylesheet.read_text(encoding="utf-8")):
+            image = stylesheet.parent / filename
+            if image not in paths:
+                failures.append(f"Missing/unpublished UI image: {filename}")
+            else:
+                images.add(image)
+    for path in paths:
+        if path.suffix.lower() in (".png", ".svg", ".jpg", ".jpeg", ".webp") and path not in images:
+            failures.append(f"Unreferenced image in publishable tree: {path.relative_to(ROOT)}")
     for image in images:
         if image.suffix == ".svg":
             ElementTree.parse(image)

@@ -33,7 +33,7 @@ No project restriction overrides those rights. To use replacement libraries,
 run the MIT-licensed application from source or rebuild the executable with your
 modified dependency versions and the included PyInstaller specification. All
 corresponding application code and build scripts are included in the matching
-Git tag. See [docs/RELEASING.md](docs/RELEASING.md).
+Git tag. See [RELEASING.md](RELEASING.md).
 
 For Qt/PySide 6.11.2, the corresponding source is available from:
 

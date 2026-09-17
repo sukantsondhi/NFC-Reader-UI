@@ -17,13 +17,14 @@ from PySide6.QtWidgets import (
 )
 import qtawesome as qta
 
-import acr122 as api
-from device import decode_ndef, parse_dump
-from manual_view import ManualView
-from worker import ReaderWorker
+from . import acr122 as api
+from .device import decode_ndef, parse_dump
+from .manual_view import ManualView
+from .worker import ReaderWorker
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
+ASSETS = Path(__file__).resolve().parent / "assets"
 
 
 def pretty(value):
@@ -108,8 +109,8 @@ class Workbench(QMainWindow):
         self.setWindowIcon(qta.icon("fa5s.broadcast-tower", color="#225ccb"))
         self.resize(1400, 920)
         self.setMinimumSize(960, 650)
-        stylesheet = (ROOT / "theme.qss").read_text(encoding="utf-8")
-        self.setStyleSheet(stylesheet.replace("@ASSETS@", (ROOT / "assets").as_posix()))
+        stylesheet = (ASSETS / "theme.qss").read_text(encoding="utf-8")
+        self.setStyleSheet(stylesheet.replace("@ASSETS@", ASSETS.as_posix()))
         self.state = {"connected": False, "generation": 0, "readers": {}, "direct": False}
         self.busy = False
         self.closing = False

@@ -3,15 +3,12 @@ from pathlib import Path
 from PyInstaller.utils.hooks import collect_data_files, copy_metadata
 
 
-root = Path(SPECPATH)
+root = Path(SPECPATH).parents[1]
 data_files = [
-    (str(root / "theme.qss"), "."),
-    (str(root / "assets"), "assets"),
+    (str(root / "nfc_workbench" / "assets"), "nfc_workbench/assets"),
     (str(root / "docs"), "docs"),
     (str(root / "README.md"), "."),
-    (str(root / "FEATURES.md"), "."),
     (str(root / "LICENSE"), "."),
-    (str(root / "THIRD_PARTY_NOTICES.md"), "."),
     (str(root / "CONTRIBUTING.md"), "."),
     (str(root / "SECURITY.md"), "."),
     (str(root / "CHANGELOG.md"), "."),
@@ -27,7 +24,7 @@ analysis = Analysis(
     binaries=[],
     datas=data_files,
     hiddenimports=["smartcard.scard", "ndef", "PySide6.QtSvg"],
-    hookspath=[str(root / "tools" / "hooks")],
+    hookspath=[str(root / "packaging" / "windows" / "hooks")],
     hooksconfig={},
     runtime_hooks=[],
     excludes=["tkinter", "unittest", "PySide6.QtDataVisualization", "qtpy.QtDataVisualization"],

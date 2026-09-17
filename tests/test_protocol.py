@@ -1,6 +1,6 @@
 import unittest
 
-import acr122 as api
+from nfc_workbench import acr122 as api
 
 
 class ProtocolTests(unittest.TestCase):

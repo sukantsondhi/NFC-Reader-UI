@@ -9,7 +9,7 @@ extract the runtime to the user's temporary directory.
 
 ```powershell
 py -3.11 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-build.txt -c constraints-windows.txt
+.\.venv\Scripts\python.exe -m pip install -r packaging/windows/requirements-build.txt -c packaging/windows/constraints.txt
 .\.venv\Scripts\python.exe tools/build_windows.py
 ```
 
@@ -37,18 +37,21 @@ build wrapper. This is smoke coverage, not real-card acceptance testing.
 
 ## Rebuilds and LGPL components
 
-`constraints-windows.txt` records the versions tested for this release. The build
+[packaging/windows/constraints.txt](../packaging/windows/constraints.txt) records
+the versions tested for this release. The PyInstaller specification and hooks
+live beside it; the build command remains [tools/build_windows.py](../tools/build_windows.py).
+The build
 is repeatable from source but not promised byte-for-byte reproducible: wheel,
 compiler and PyInstaller timestamps can affect output hashes. To replace a Qt,
 PySide or pyscard library, install your compatible modified distribution in the
 build environment and rebuild using the same specification without those version
 constraints. Application source is MIT licensed and contains no obfuscated or
 closed components that prevent relinking. Preserve dependency notices and the
-corresponding-source rights described in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
+corresponding-source rights described in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## Publication checklist
 
-1. Update `VERSION` in the application and add a changelog entry.
+1. Update `VERSION` in [nfc_workbench/__main__.py](../nfc_workbench/__main__.py) and add a changelog entry.
 2. Run the build above in the environment whose dependencies you intend to ship.
 3. Review the resulting smoke report and screenshot, and perform manual desktop checks.
 4. Review `git diff --cached`, the publishable-file check and the secret/file audit.

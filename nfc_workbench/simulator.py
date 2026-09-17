@@ -2,7 +2,7 @@
 
 from contextlib import nullcontext
 
-import acr122 as api
+from . import acr122 as api
 
 
 class DemoTransport:

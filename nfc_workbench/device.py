@@ -7,7 +7,7 @@ import json
 import threading
 import time
 
-import acr122 as api
+from . import acr122 as api
 
 
 class PcscError(RuntimeError):

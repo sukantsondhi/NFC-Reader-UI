@@ -14,7 +14,7 @@ The simulator does not reproduce every card's security rules or electrical behav
 
 The reader command reference is the
 [ACS ACR122U API V2.04 PDF](https://www.acs.com.hk/download-manual/419/API-ACR122U-2.04.pdf). The implementation checklist
-is in [FEATURES.md](../FEATURES.md). This guide describes the application as it
+is in [FEATURES.md](FEATURES.md). This guide describes the application as it
 exists, including limits; reader support does not mean unrestricted access to
 every card or application.
 
@@ -1222,7 +1222,7 @@ formal standards/card documents require membership or an account.
 
 The vendor PDF contains a few inconsistent examples. This app follows
 **`FF CA 01 00 00` for ATS**, **Le=`04` for Read Value**, and Classic sector 14's
-data range **`38..3A` hex**. See [FEATURES.md](../FEATURES.md) for the corrections
+data range **`38..3A` hex**. See [FEATURES.md](FEATURES.md) for the corrections
 and reasons. These small distinctions matter when comparing raw command bytes.
 
 ## Coverage and Verification
@@ -1260,4 +1260,4 @@ The generator permits only DemoTransport, exercises sample operations, captures
 the actual confirmation dialog, and writes the PNGs under `docs/images`. It never
 opens a physical reader. Regenerate after changing controls or styles, then review
 the images and option tables together. The app's QtAwesome/Font Awesome icon
-attribution is in [assets/README.md](../assets/README.md).
+attribution is in [nfc_workbench/assets/README.md](../nfc_workbench/assets/README.md).

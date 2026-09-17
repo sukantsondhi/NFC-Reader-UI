@@ -13,9 +13,9 @@ from PySide6.QtCore import QCoreApplication, QEvent, QEventLoop, QTimer, Qt, QUr
 from PySide6.QtWebEngineCore import QWebEnginePage
 from PySide6.QtWidgets import QApplication
 
-import acr122 as api
-from ui import Workbench
-from manual_view import ManualPage, ManualView, render_manual
+from nfc_workbench import acr122 as api
+from nfc_workbench.ui import Workbench
+from nfc_workbench.manual_view import ManualPage, ManualView, render_manual
 
 
 def javascript(browser, source):
@@ -135,7 +135,7 @@ class UiTests(unittest.TestCase):
         clicked = QWebEnginePage.NavigationType.NavigationTypeLinkClicked
         sections = []
         page.section_requested.connect(sections.append)
-        with patch("manual_view.QDesktopServices.openUrl", return_value=True) as open_url:
+        with patch("nfc_workbench.manual_view.QDesktopServices.openUrl", return_value=True) as open_url:
             section = QUrl.fromLocalFile(str(root / "docs" / "USER_MANUAL.md"))
             section.setFragment("memory")
             self.assertFalse(page.acceptNavigationRequest(section, clicked, True))

@@ -7,7 +7,7 @@ import traceback
 
 from PySide6.QtCore import QCoreApplication, QEvent, QEventLoop, QTimer, Qt
 
-import acr122 as api
+from . import acr122 as api
 
 
 def receive_signal(signal, action=None):
